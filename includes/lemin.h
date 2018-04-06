@@ -50,6 +50,7 @@ typedef struct  s_file
     char            *map;
     char            *line;
     struct s_room   **rooms;
+	struct s_room   **final_paths;
 	int				nb_rooms;
     char            *start;
     char            *end;
