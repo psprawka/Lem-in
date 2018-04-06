@@ -15,10 +15,12 @@
 void    ft_bzero(void *s, unsigned int n)
 {
     char    *ptr;
-	
     ptr = s;
     while (n--)
+	{
+		
         *ptr++ = '\0';
+	}
 }
 
 int        ft_strlen(char *str)
