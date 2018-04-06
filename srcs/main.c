@@ -19,11 +19,9 @@ void	init(t_file *file)
 	file->line = NULL;
 	file->nb_rooms = 0;
 	file->rooms = (t_room **)malloc(sizeof(t_room *) * MAX_ROOMS_NB);
-	ft_bzero(file->rooms, MAX_ROOMS_NB);
 	file->start = NULL;
 	file->nb_paths = 0;
 	file->paths = (char **)malloc(sizeof(char *) * MAX_PATHS_NB);
-	ft_bzero(ROOMS, MAX_PATHS_NB);
 	file->end = NULL;
 	file->offset = 0;
 }
