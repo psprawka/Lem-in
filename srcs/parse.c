@@ -40,6 +40,7 @@ void	get_ants(t_file *file)
 	if (file->line[i] > 57 || file->line[i] < 48)
 		error();
 	file->ants = ft_atoi(file->line);
+	file->ants2 = file->ants;
 	while (file->line[i] < 58 && file->line[i] > 47)
 		i++;
 	while (file->line[i] == '\t' || file->line[i] == ' ')

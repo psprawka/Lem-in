@@ -38,20 +38,32 @@ typedef struct  s_room
     char            *name;
     int             weight;
 	int				path;
-	int 			ants;
 	int				open;
     
 }               t_room;
 
+typedef struct  s_path
+{
+	struct s_path   *next;
+	struct s_path   *prev;
+	char            *name;
+	int             weight;
+	int 			ants;
+	int				nb_ant;
+	
+}               t_path;
+
+
 typedef struct  s_file
 {
     int             ants;
+	int 			ants2;
 	int				nb_paths;
 	char			**paths;
     char            *map;
     char            *line;
     struct s_room   **rooms;
-	struct s_room   **final_paths;
+	struct s_path   **final_paths;
 	int				nb_rooms;
     char            *start;
     char            *end;
