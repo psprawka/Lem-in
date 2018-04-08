@@ -50,7 +50,6 @@ void	rooms(t_file *file)
 	
 	i = 0;
 	
-	
 	while (gnl(file) != 0)
 	{
 		//		printf("ROOOOOMS1!\n");

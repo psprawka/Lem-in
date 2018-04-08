@@ -38,6 +38,7 @@ typedef struct  s_room
     char            *name;
     int             weight;
 	int				path;
+	int 			ants;
 	int				open;
     
 }               t_room;
