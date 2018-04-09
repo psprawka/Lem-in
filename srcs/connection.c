@@ -14,16 +14,15 @@
 
 int		if_connect(t_file *file, int i)
 {
-	while (file->line[i] == ' ' || file->line[i] == '\t')
+	while (LINE[i] == ' ' || LINE[i] == '\t')
 		i++;
-	while (file->line[i] && file->line[i] != '-' )
+	while (LINE[i] && LINE[i] != '-' )
 		i++;
-	if (file->line[i++] != '-')
+	if (LINE[i++] != '-')
 		error();
-	
-	while (file->line[i] && (file->line[i] != ' ' && file->line[i] != '\t'))
+	while (LINE[i] && (LINE[i] != ' ' && LINE[i] != '\t'))
 		i++;
-	return (file->line[i] == '\0' ? 1 : 0);
+	return (LINE[i] == '\0' ? 1 : 0);
 }
 
 int		check_row(t_file *file, int i, char *to_compare, int w)
@@ -43,29 +42,25 @@ int		check_row(t_file *file, int i, char *to_compare, int w)
 void	add_room(int weight, char *name, t_room *prev)
 {
 	t_room *room;
-	//	printf("%sADDING A ROOM! curr_name: %s | name_to_add: %s%s\n", MAGNETA, prev->name, name, NORMAL);
 
 	room = (t_room *)malloc(sizeof(t_room));
-	
 	room->weight = weight;
 	room->name = name;
 	room->next = NULL;
 	room->open = 1;
-	
 	if (prev->next != NULL)
 		room->next = prev->next;
 	prev->next = room;
-	
 }
 
 void	make_connect(t_file *file, char *r1, char *r2)
 {
-	int		i = 0;
 	t_room	*ptr;
-//	printf("MAKE CONNECT! r1: [%s] r2: [%s]\n", r1, r2);
-	while (i < file->nb_rooms)
+	int		i;
+	
+	i = -1;
+	while (i++ < file->nb_rooms)
 	{
-//		printf("FIRST WHILE LOOP: %d\n", i);
 		ptr = ROOMS[i];
 		while (ptr != NULL)
 		{
@@ -73,13 +68,10 @@ void	make_connect(t_file *file, char *r1, char *r2)
 				add_room(ptr->weight + 1, r2, ptr);
 			ptr = ptr->next;
 		}
-		i++;
 	}
-	
-	i = 0;
-	while (i < file->nb_rooms)
+	i = -1;
+	while (i++ < file->nb_rooms)
 	{
-//		printf("SECOND WHILE LOOP: %d\n", i);
 		ptr = ROOMS[i];
 		while (ptr != NULL)
 		{
@@ -87,7 +79,6 @@ void	make_connect(t_file *file, char *r1, char *r2)
 				add_room(ptr->weight + 1, r1, ptr);
 			ptr = ptr->next;
 		}
-		i++;
 	}
 }
 
@@ -106,7 +97,6 @@ void	rooms_exist(t_file *file, char *r1, char *r2)
 			rooms++;
 		i++;
 	}
-	
 	if (rooms != 2)
 		error();
 }
@@ -117,26 +107,19 @@ void	connect(t_file *file)
 	char	*room2;
 	int		i;
 	
-	
-	while (ft_strcmp(file->line, "\0") != 0)
+	while (ft_strcmp(LINE, "\0") != 0)
 	{
 		i = 0;
-//		printf("%sCONNECT [%s]%s\n", YELLOW, file->line, NORMAL);
 		comment_command(file);
-//		printf("AFTER COMMAND\n");
 		if (if_connect(file, 0) == 0)
 			error();
-		room1 = ft_strncpy(file->line, ft_strlen_chr(file->line, '-'));
-//		printf("AFTER ROOM1\n");
-		while (file->line[i] != '-')
+		room1 = ft_strncpy(LINE, ft_strlen_chr(LINE, '-'));
+		while (LINE[i] != '-')
 			i++;
 		i++;
-		room2 = get_name(&(file->line[i]));
-//		printf("AFTER ROOM2\n");
+		room2 = get_name(&(LINE[i]));
 		rooms_exist(file, room1, room2);
-			
 		make_connect(file, room1, room2);
-		
 		if (gnl(file) == 0)
 			break;
 	}

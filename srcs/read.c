@@ -35,7 +35,7 @@ int        gnl(t_file *file)
 	char	*temp;
 	
 	temp = ft_strnew(BUFF_SIZE);
-	file->line = ft_strnew(1);
+	LINE = ft_strnew(1);
 	//	printf("GNL 1\n");
 	while ((file->map[file->offset] == ' ' || file->map[file->offset] == '\n'
 			|| file->map[file->offset] == '\t') && file->map[file->offset] != '\0')
@@ -52,11 +52,11 @@ int        gnl(t_file *file)
 		//			printf("GNL inside while loop size: %d, offset: %d\n", size, file->offset);
 		//		}
 		//		printf("[%s]\n", temp);
-		file->line = ft_strjoin(file->line, temp);
-		//		printf("[%s]\n", file->line);
+		LINE = ft_strjoin(LINE, temp);
+		//		printf("[%s]\n", LINE);
 	}
 	//	printf("GNL 3\n");
-	if (ft_strcmp(file->line, "\0") == 0)
+	if (ft_strcmp(LINE, "\0") == 0)
 		//	{
 		//		printf("GNL 4\n");
 		return (0);

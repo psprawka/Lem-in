@@ -12,38 +12,29 @@
 
 #include "../includes/lemin.h"
 
-# define PATHS 		file->final_paths
-# define ANTS 		file->ants
-# define NB_PATHS 	file->nb_rooms
+
 
 void	add_room_path(t_file *file, t_path *head, char *name)
 {
 	t_path *path;
 	
 	path = (t_path *)malloc(sizeof(t_path));
-//	printf("%s\n", name);
 	path->weight = 0;
-	path->name = name;
+	path->name = ft_strdup(name);
 	path->next = NULL;
-	
 	if (head == NULL)
 	{
-//		printf("seg here1\n");
 		PATHS[file->nb_rooms] = path;
 		path->prev = NULL;
-//		printf("seg here2\n");
 	}
 	else
 	{
-//		printf("here %p\n", head);
 		while (head->next)
 			head = head->next;
-//		printf("here2\n");
 		head->next = path;
 		path->prev = head;
 	}
-//	prev->next = path;
-	
+	free(name);
 }
 
 void	get_paths(t_file *file)
@@ -52,42 +43,30 @@ void	get_paths(t_file *file)
 	int		path;
 	int 	i;
 	
-	path = 0;
-//	printf("get paths\n");
-	while (path < file->nb_paths)
+	path = -1;
+	while (++path < file->nb_paths)
 	{
 		if (ft_strcmp(file->paths[path], "\0"))
 		{
-//			printf("got path [%s]\n", file->paths[path]);
-//			create_path(file, file->paths[path]);
 			i = 0;
 			while (file->paths[path][i] && file->paths[path][i] != ':')
 				i++;
-			if (file->paths[path][i] == '\0')
+			if (file->paths[path][i++] == '\0')
 				break ;
-			i++;
 			name = get_name(&(file->paths[path][i]));
 			add_room_path(file, NULL, name);
 			while (file->paths[path][i])
 			{
 				while (file->paths[path][i] && file->paths[path][i] != ' ')
 					i++;
-				if (file->paths[path][i] == '\0')
+				if (file->paths[path][i++] == '\0')
 					break ;
-				i++;
 				name = get_name(&(file->paths[path][i]));
-//				printf("HERE3 %d\n", file->nb_rooms);
 				add_room_path(file, PATHS[file->nb_rooms], name);
-				
 			}
-//			printf("after path found\n");
 			PATHS[file->nb_rooms++]->weight = ft_atoi(file->paths[path]);
-//			printf("got path\n");
 		}
-		path++;
-		
 	}
-	
 }
 
 

@@ -71,7 +71,14 @@ typedef struct  s_file
     
 }               t_file;
 
-# define ROOMS			file->rooms
+# define ROOMS		file->rooms
+# define START		file->start
+# define END		file->end
+# define LINE		file->line
+# define PATHS 		file->final_paths
+# define TPATHS 		file->paths
+# define ANTS 		file->ants
+# define NB_PATHS 	file->nb_rooms
 
 /* libft.c */
 long int	ft_atoi(char *s);

@@ -32,7 +32,6 @@ void	free_rooms(t_file *file)
 				ptr = prev->next;
 		}
 	}
-	
 }
 
 void	free_paths(t_file *file)

@@ -14,20 +14,17 @@
 
 char	*get_name(char *line)
 {
-	int i;
-	int iname;
+	int		i;
+	int		iname;
 	char	*str;
-	//	printf("GET NAME1 file->line [%s]\n", file->line);
+
 	i = 0;
 	iname = 0;
 	str = ft_strnew(MAX_NAME_LEN);
-	//	printf("GET NAME2\n");
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	//	printf("GET NAME3\n");
 	while (line[i] && line[i] != ' ' && line[i] != '\t')
 		str[iname++] = line[i++];
-	//	printf("GOT NAME4\n");
 	return (str);
 }
 
@@ -36,19 +33,16 @@ void	get_ants(t_file *file)
 	int	i;
 	
 	i = 0;
-//	printf("%s[%s]%s\n", BLUE, file->line, NORMAL);
-	if (file->line[i] > 57 || file->line[i] < 48)
+	if (LINE[i] > 57 || LINE[i] < 48)
 		error();
-	file->ants = ft_atoi(file->line);
+	file->ants = ft_atoi(LINE);
 	file->ants2 = file->ants;
-	while (file->line[i] < 58 && file->line[i] > 47)
+	while (LINE[i] < 58 && LINE[i] > 47)
 		i++;
-	while (file->line[i] == '\t' || file->line[i] == ' ')
+	while (LINE[i] == '\t' || LINE[i] == ' ')
 		i++;
-	if (file->line[i] != '\0')
-//	{
+	if (LINE[i] != '\0')
 		error();
-//	}
 }
 
 void   comment_command(t_file *file)
@@ -56,40 +50,24 @@ void   comment_command(t_file *file)
 	int i;
 	
 	i = 0;
-//		printf("%s[%s]%s\n", RED, file->line, NORMAL);
-	while (file->line[i] != '#' && file->line[i] != '\0')
+	while (LINE[i] != '#' && LINE[i] != '\0')
 		i++;
-	if (file->line[i] == '\0')
+	if (LINE[i] == '\0')
 		return ;
-	if (file->line[i + 1] != '#')
-//	{
-		//		if (file->line[i] == '#') printf("comment removed\n");
-		file->line[i] = '\0';
-		//		printf("line: [%s]\n", file->line);
-//	}
+	if (LINE[i + 1] != '#')
+		LINE[i] = '\0';
 	else
 	{
-//		printf("%s\n", &(file->line[i]));
-		if (file->end == NULL && ft_strncmp(&(file->line[i]), "##end", 5) == 0 && gnl(file))
-//		{
-//						printf("ENDING\n");
-			file->end = get_name(file->line);
-//		}
-		else if (file->start == NULL && ft_strncmp(&(file->line[i]), "##start", 7) == 0 && gnl(file))
-//		{
-//						printf("STARTING\n");
-			file->start = get_name(file->line);
-//		}
+		if (END == NULL && ft_strncmp(&(LINE[i]), "##end", 5) == 0 && gnl(file))
+			END = get_name(LINE);
+		else if (START == NULL && ft_strncmp(&(LINE[i]), "##start", 7) == 0
+				 && gnl(file))
+			START = get_name(LINE);
 		else
-//		{
-//			printf("here dfdfgg\n");
 			error();
-//		}
 	}
-	//	printf("LINE [%s]\n", file->line);
-	if (ft_strcmp(file->line, "\0") == 0)
+	if (ft_strcmp(LINE, "\0") == 0)
 	{
-		//		printf("RECURSIVE\n");
 		gnl(file);
 		comment_command(file);
 	}
@@ -101,29 +79,8 @@ void    parse(t_file *file)
 		error();
 	
 	get_ants(file);
-//	printf("ants: %d\n", file->ants);
-//	printf("%s[%s]%s\n", CYAN, file->line, NORMAL);
 	rooms(file);
-	if (file->ants < 0 || file->start == NULL || file->end == NULL)
+	if (file->ants < 0 || START == NULL || END == NULL)
 		error();
-//	printf("AFTER PARSING ROOMS\n");
 	connect(file);
-	
-	
-//	int		i = 0;
-//	t_room	*ptr;
-//
-//	printf("%s", CYAN);
-//	while (i < file->nb_rooms)
-//	{
-//		ptr = ROOMS[i];
-//		while (ptr != NULL)
-//		{
-//			printf("%s %d -> ", ptr->name, ptr->weight);
-//			ptr = ptr->next;
-//		}
-//		printf("null\n");
-//		i++;
-//	}
-//	printf("%s", NORMAL);
 }
