@@ -144,27 +144,37 @@ void	display_ants(t_file *file, int cycle)
 	{
 		ptr = file->final_paths[paths];
 		
-//		while (ptr->next && i < cycle - 1)
-//			ptr = ptr->next;
-//		printf("current room for path %d and cycle %d: %s\n", paths, cycle, ptr->name);
+		while (ptr->next && i++ < cycle - 1)
+		{
+//			printf("current room %s for path %d and cycle %d: \n", ptr->name, paths, cycle);
+			ptr = ptr->next;
+		}
+//		printf("\n\n");
+//		printf("%sANTS: %d%s ", CYAN, ANTS, NORMAL);
+		i = 0;
 		
-//		i = 0;
 		if (ANTS != 0)
 		{
-			if (ptr->ants < 1)
-				ptr->nb_ant = -1;
-				
+//			printf("comin here\n");
+//			if (ptr->ants < 1)
+//				ptr->nb_ant = -1;
+			
 			while (i < cycle && ptr)// && ft_strcmp(file->end, ptr->name))
 			{
-				if (i != 0 && ptr->nb_ant < file->ants2 + 1 && ptr->nb_ant != -1)
+//				printf("%sroom [%s] ants [%d] for path %d%s\n", GREEN, ptr->name, ptr->nb_ant, paths, NORMAL);
+//				printf("%sBEFORE FOR PATH [%d] %d ANTS LEFT%s\n", MAGNETA, paths, file->final_paths[paths]->ants, NORMAL);
+				if (ft_strcmp(ptr->name, START) && ptr->nb_ant != -1)
 					printf("%sL%d-%s %s", ptr->color, ptr->nb_ant, ptr->name, NORMAL);
-				if (ft_strcmp(file->end, ptr->name) == 0)
+				if (ft_strcmp(file->end, ptr->name) == 0 && ptr->nb_ant != -1)
 					ANTS--;
-				ptr = ptr->next;
+//				printf("%sAFTER FOR PATH [%d] %d ANTS LEFT%s\n", MAGNETA, paths, file->final_paths[paths]->ants, NORMAL);
+				ptr = ptr->prev;
+				
+				
 				//				ptr = ptr->prev;
 				i++;
 			}
-			
+//			file->final_paths[paths]->ants--;
 			PATHS[paths]->ants--;
 		}
 		paths++;
@@ -183,13 +193,15 @@ void	display_ants(t_file *file, int cycle)
 	while (paths < file->nb_fpaths)
 	{
 		ptr = file->final_paths[paths];
-		new = ptr->nb_ant == -1 ? -1 : ptr->nb_ant + 1;
+//		printf("%sFOR PATH [%d] %d ANTS LEFT%s\n", MAGNETA, paths, file->final_paths[paths]->ants, NORMAL);
+		new = file->final_paths[paths]->ants > 0 ? ptr->nb_ant + 1 : -1;
 		if (ANTS != 0)
 		{
 			while (i < cycle + 1 && ptr)
 			{
 				next = ptr->nb_ant;
 				ptr->nb_ant = new;
+//				printf("room [%s] ants [%d] for path %d\n", ptr->name, new, paths);
 				new = next;
 				ptr = ptr->next;
 				i++;
@@ -207,8 +219,10 @@ void	display_ants(t_file *file, int cycle)
 
 int 	print_path(t_file *file)
 {
-	int i = 0;
+	int 	i;
+	t_path* ptr;
 	
+	i = 0;
 //	file->paths = (t_path **)malloc(sizeof(t_room *) * file->nb_paths);
 //	ft_bzero(file->rooms, file->nb_paths);
 	
@@ -225,7 +239,11 @@ int 	print_path(t_file *file)
 //	printf("BEFORE DISPLAY\n");
 	while (i < file->nb_fpaths)
 	{
+		ptr = PATHS[i];
 		PATHS[i]->nb_ant = i == 0 ? 1 : PATHS[i - 1]->ants + PATHS[i - 1]->nb_ant;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->ants = PATHS[i]->ants;
 		i++;
 	}
 //	printf("AFTER DISPLAY\n");
