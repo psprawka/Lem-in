@@ -36,6 +36,7 @@ typedef struct  s_room
 {
     struct s_room   *next;
     char            *name;
+	char            *color;
     int             weight;
 	int				path;
 	int				open;
@@ -47,6 +48,7 @@ typedef struct  s_path
 	struct s_path   *next;
 	struct s_path   *prev;
 	char            *name;
+	char            *color;
 	int             weight;
 	int 			ants;
 	int				nb_ant;
@@ -59,6 +61,7 @@ typedef struct  s_file
     int             ants;
 	int 			ants2;
 	int				nb_paths;
+	int				nb_fpaths;
 	char			**paths;
     char            *map;
     char            *line;
@@ -76,7 +79,7 @@ typedef struct  s_file
 # define END		file->end
 # define LINE		file->line
 # define PATHS 		file->final_paths
-# define TPATHS 		file->paths
+# define TPATHS 	file->paths
 # define ANTS 		file->ants
 # define NB_PATHS 	file->nb_rooms
 
@@ -96,13 +99,13 @@ char		*ft_strncpy(char *str, int size);
 int			ft_strstr(char *str, char *to_find);
 
 /* parse.c */
+char	*comment_command(t_file *file);
 char	*get_name(char *line);
 void	get_ants(t_file *file);
-void	comment_command(t_file *file);
 void    parse(t_file *file);
 
 /* tools.c */
-void	error(void);
+void	error(int errno);
 
 /* connection.c */
 int		if_connect(t_file *file, int i);

@@ -19,7 +19,7 @@ int		if_connect(t_file *file, int i)
 	while (LINE[i] && LINE[i] != '-' )
 		i++;
 	if (LINE[i++] != '-')
-		error();
+		error(7);
 	while (LINE[i] && (LINE[i] != ' ' && LINE[i] != '\t'))
 		i++;
 	return (LINE[i] == '\0' ? 1 : 0);
@@ -98,7 +98,7 @@ void	rooms_exist(t_file *file, char *r1, char *r2)
 		i++;
 	}
 	if (rooms != 2)
-		error();
+		error(8);
 }
 
 void	connect(t_file *file)
@@ -110,9 +110,11 @@ void	connect(t_file *file)
 	while (ft_strcmp(LINE, "\0") != 0)
 	{
 		i = 0;
-		comment_command(file);
+//		printf("HERRRRR\n");
+		if (comment_command(file) != NULL)
+			error(3);
 		if (if_connect(file, 0) == 0)
-			error();
+			error(7);
 		room1 = ft_strncpy(LINE, ft_strlen_chr(LINE, '-'));
 		while (LINE[i] != '-')
 			i++;

@@ -12,9 +12,24 @@
 
 #include "../includes/lemin.h"
 
-void	error(void)
+void	error(int errno)
 {
-	printf("ERROR\n");
+	if (errno == 1)
+		printf("ERROR: INVALID NUMBER/FORMAT/LACK OF ANTS\n");
+	else if (errno == 2)
+		printf("ERROR: NO START OR NO END\n");
+	else if (errno == 3)
+		printf("ERROR: WRONG COMMAND FORMAT/PLACEMENT\n");
+	else if (errno == 4)
+		printf("ERROR: EMPTY FILE\n");
+	else if (errno == 5)
+		printf("ERROR: NO PATHS\n");
+	else if (errno == 6)
+		printf("ERROR: IDK WHAT IT CHECKS LOL\n");
+	else if (errno == 7)
+		printf("ERROR: WRONG FILE FORMAT\n");
+	else if (errno == 8)
+		printf("ERROR: UNKNOWN ROOM\n");
 	exit (0);
 }
 

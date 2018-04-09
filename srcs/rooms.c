@@ -41,21 +41,23 @@ int 	if_room(char *line, int i)
 
 void	rooms(t_file *file)
 {
-	t_room *room;
-	int i;
+	t_room	*room;
+	char	*color;
+	int		i;
 	
 	i = 0;
-	
 	while (gnl(file) != 0)
 	{
-		comment_command(file);
+//		printf("%sBEFORE[%s] room: %p%s\n", RED, LINE, &room, NORMAL);
+		color = comment_command(file);
 		room = (t_room *)malloc(sizeof(t_room));
-		printf("%s[%s] room: %p%s\n", RED, LINE, &room, NORMAL);
+//		printf("%sAFTER[%s] room: %p%s\n", RED, LINE, &room, NORMAL);
 		if (if_room(LINE, 0) == 0)
 			break;
 		room->name = get_name(LINE);
 		room->weight = 0;
 		room->next = NULL;
+		room->color = color == NULL ? NORMAL : color;
 		room->open = 1;
 		room->path = -1;
 		file->nb_rooms++;

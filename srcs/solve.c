@@ -26,7 +26,6 @@ t_room	*find_room(t_file *file, char *to_find)
 		i++;
 	}
 	return ((t_room *)NULL);
-	
 }
 
 int		room_pos(t_file *file, char *to_find)
@@ -156,10 +155,10 @@ void	solve(t_file *file)
 	
 	printf("START %s | CURRENT %s\n", file->start, "curr->name");
 	if ((curr = find_room(file, file->start)) == NULL)
-		error();
+		error(6);
 	printf("\n------------------------------------------------------------\n\n");
 	if (find_path(file, curr, 0) == 0)
-		error();
+		error(5);
 	
 	
 	int i = 0;

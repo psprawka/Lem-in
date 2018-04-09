@@ -12,19 +12,22 @@
 
 #include "../includes/lemin.h"
 
-
-
 void	add_room_path(t_file *file, t_path *head, char *name)
 {
-	t_path *path;
+	t_path	*path;
+	t_room	*room;
 	
 	path = (t_path *)malloc(sizeof(t_path));
 	path->weight = 0;
+	room = find_room(file, name);
+//	printf("%p %s\n", room, name);
+	path->color = room->color;
+//	printf("%sthats my color [%s]%s\n", path->color, name, NORMAL);
 	path->name = ft_strdup(name);
 	path->next = NULL;
 	if (head == NULL)
 	{
-		PATHS[file->nb_rooms] = path;
+		PATHS[file->nb_fpaths] = path;
 		path->prev = NULL;
 	}
 	else
@@ -35,6 +38,7 @@ void	add_room_path(t_file *file, t_path *head, char *name)
 		path->prev = head;
 	}
 	free(name);
+//	printf("add room done\n");
 }
 
 void	get_paths(t_file *file)
@@ -62,9 +66,9 @@ void	get_paths(t_file *file)
 				if (file->paths[path][i++] == '\0')
 					break ;
 				name = get_name(&(file->paths[path][i]));
-				add_room_path(file, PATHS[file->nb_rooms], name);
+				add_room_path(file, PATHS[file->nb_fpaths], name);
 			}
-			PATHS[file->nb_rooms++]->weight = ft_atoi(file->paths[path]);
+			PATHS[file->nb_fpaths++]->weight = ft_atoi(file->paths[path]);
 		}
 	}
 }
@@ -79,19 +83,23 @@ void		count_ants(t_file *file)
 	int		ants;
 	
 //	min = 0;
+	
 	first_index = -1;
 	ants = file->ants;
+//	printf("COUNT ANTS YAYA\n");
 	while (ants > 0)
 	{
 		i = 0;
-		while (i < NB_PATHS && PATHS[i]->weight == -1)
+//		printf("COUNT ANTS YAYA1\n");
+		while (i < file->nb_fpaths && PATHS[i]->weight == -1)
 			i++;
 		min = i;
-		if (min == NB_PATHS)
+//		printf("COUNT ANTS YAYA3\n");
+		if (min == file->nb_fpaths)
 			break ;
 //		printf("%sMIN INDEX: %d%s\n", GREEN, min, NORMAL);
 		i = -1;
-		while (++i < NB_PATHS)
+		while (++i < file->nb_fpaths)
 //		{
 			if (PATHS[i]->weight != -1 && PATHS[min]->weight > PATHS[i]->weight)
 				min = i;
@@ -115,13 +123,13 @@ void		count_ants(t_file *file)
 	if (ants <= 0)
 		return ;
 	
-//	printf("%sASSIGNED ants TO NODE [%d]: %d modulo ants: %d%s\n", YELLOW, 0, PATHS[0]->ants, ants % NB_PATHS, NORMAL);
+//	printf("%sASSIGNED ants TO NODE [%d]: %d modulo ants: %d%s\n", YELLOW, 0, PATHS[0]->ants, ants % file->nb_fpaths, NORMAL);
 //	printf("first index: %d\n", first_index);
-	PATHS[first_index]->ants += ants % NB_PATHS;
+	PATHS[first_index]->ants += ants % file->nb_fpaths;
 //	printf("%sASSIGNED ants TO NODE [%d]: %d%s\n", YELLOW, 0, PATHS[0]->ants, NORMAL);
 	i = 0;
-	while (i < NB_PATHS)
-		PATHS[i++]->ants += ants / NB_PATHS;
+	while (i < file->nb_fpaths)
+		PATHS[i++]->ants += ants / file->nb_fpaths;
 }
 
 
@@ -132,7 +140,7 @@ void	display_ants(t_file *file, int cycle)
 	
 	t_path *ptr;
 	
-	while (paths < NB_PATHS)
+	while (paths < file->nb_fpaths)
 	{
 		ptr = file->final_paths[paths];
 		
@@ -149,7 +157,7 @@ void	display_ants(t_file *file, int cycle)
 			while (i < cycle && ptr)// && ft_strcmp(file->end, ptr->name))
 			{
 				if (i != 0 && ptr->nb_ant < file->ants2 + 1 && ptr->nb_ant != -1)
-					printf("L%d-%s ", ptr->nb_ant, ptr->name);
+					printf("%sL%d-%s %s", ptr->color, ptr->nb_ant, ptr->name, NORMAL);
 				if (ft_strcmp(file->end, ptr->name) == 0)
 					ANTS--;
 				ptr = ptr->next;
@@ -172,7 +180,7 @@ void	display_ants(t_file *file, int cycle)
 	int next;
 	
 	paths = 0;
-	while (paths < NB_PATHS)
+	while (paths < file->nb_fpaths)
 	{
 		ptr = file->final_paths[paths];
 		new = ptr->nb_ant == -1 ? -1 : ptr->nb_ant + 1;
@@ -208,12 +216,14 @@ int 	print_path(t_file *file)
 //	while (i < file->nb_paths)
 //	ft_bzero(PATHS[i], file->nb_paths);
 //	printf("paths nb: %d\n", file->nb_paths);
-	file->nb_rooms = 0;
-	
+//	file->nb_rooms = 0;
+	file->nb_fpaths = 0;
 	get_paths(file);
+//	printf("get paths done\n");
 	count_ants(file);
+//	printf("count ants done\n");
 //	printf("BEFORE DISPLAY\n");
-	while (i < file->nb_rooms)
+	while (i < file->nb_fpaths)
 	{
 		PATHS[i]->nb_ant = i == 0 ? 1 : PATHS[i - 1]->ants + PATHS[i - 1]->nb_ant;
 		i++;
@@ -223,14 +233,14 @@ int 	print_path(t_file *file)
 	
 	
 //	i = 0;
-//	while (i < file->nb_rooms)
+//	while (i < file->nb_fpaths)
 //	{
 //		printf("ants for room [%d]: %d\n", i, PATHS[i]->ants);
 //		i++;
 //	}
 //	
 //	i = 0;
-//	while (i < file->nb_rooms)
+//	while (i < file->nb_fpaths)
 //	{
 //		printf("nb_ant for path [%d]: %d\n", i, PATHS[i]->nb_ant);
 //		i++;
@@ -244,7 +254,7 @@ int 	print_path(t_file *file)
 	t_path *p;
 	
 //	printf("got them all\n");
-//	while (i < file->nb_rooms)
+//	while (i < file->nb_fpaths)
 //	{
 //		printf("path %d: ", i);
 //		p = PATHS[i];
