@@ -30,7 +30,11 @@
 # define BLUE		"\x1B[34m"
 # define MAGNETA	"\x1B[35m"
 # define CYAN		"\x1B[36m"
-
+# define PINK		"\033[38;5;200m"
+# define ORANGE		"\033[38;5;208m"
+# define PURPLE		"\033[38;5;55m"
+# define MAROON		"\033[38;5;88m"
+# define GREY		"\033[38;5;246m"
 
 typedef struct  s_room
 {
@@ -79,9 +83,8 @@ typedef struct  s_file
 # define END		file->end
 # define LINE		file->line
 # define PATHS 		file->final_paths
-# define TPATHS 	file->paths
 # define ANTS 		file->ants
-# define NB_PATHS 	file->nb_rooms
+
 
 /* libft.c */
 long int	ft_atoi(char *s);
@@ -106,12 +109,14 @@ void    parse(t_file *file);
 
 /* tools.c */
 void	error(int errno);
+void	rooms_exist(t_file *file, char *r1, char *r2);
+char	*colorsfind(t_file *file, char *command);
 
 /* connection.c */
 int		if_connect(t_file *file, int i);
 int		check_row(t_file *file, int i, char *to_compare, int w);
 void	add_room(int weight, char *name, t_room *prev);
-void	make_connect(t_file *file, char *r1, char *r2);
+void	make_connect(t_file *file, char *r1, char *r2, int i);
 void	connect(t_file *file);
 
 /* rooms.c */

@@ -1,0 +1,21 @@
+10
+##start
+pola 1 3
+##green
+sam 7 9
+##yellow
+adam 8 10
+##cyan
+liam 3 4
+##end
+terence 12 0
+##magneta
+nick 6 5
+pola-liam
+liam-nick
+nick-terence
+adam-pola
+pola-adam
+adam-terence
+pola-sam
+terence-sam

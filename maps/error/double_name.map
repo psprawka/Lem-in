@@ -1,0 +1,18 @@
+7
+##end
+pola 72 4
+sam 56 9
+adam 8 10
+liam 32 -43
+liam 14 88
+terence 12 0
+##start
+nick -6 5
+pola-liam
+liam-nick
+nick-terence
+adam-pola
+adam-terence
+pola-sam
+terence-sam
+

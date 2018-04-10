@@ -14,10 +14,10 @@
 
 void	free_rooms(t_file *file)
 {
-	int 	i;
+	int		i;
 	t_room	*ptr;
 	t_room	*prev;
-	
+
 	i = 0;
 	while (i < file->nb_rooms)
 	{
@@ -37,13 +37,12 @@ void	free_rooms(t_file *file)
 void	free_paths(t_file *file)
 {
 	int i;
-	
+
 	i = 0;
 	while (i < file->nb_paths)
 		free(file->paths[i++]);
 	free(file->paths);
 }
-
 
 void	free_file(t_file *file)
 {

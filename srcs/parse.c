@@ -31,7 +31,7 @@ char	*get_name(char *line)
 void	get_ants(t_file *file)
 {
 	int	i;
-	
+
 	i = 0;
 	if (LINE[i] > 57 || LINE[i] < 48)
 		error(1);
@@ -42,37 +42,36 @@ void	get_ants(t_file *file)
 	while (LINE[i] == '\t' || LINE[i] == ' ')
 		i++;
 	if (LINE[i] != '\0')
-		error(7);
+		error(1);
 }
 
-
-char	*colorsfind(t_file *file, char *command)
+char	*command(t_file *file, int i)
 {
-	printf("command [%s]\n", command);
-	if (ft_strncmp(command, "##green", 7) == 0 && gnl(file))
-		return (GREEN);
-	if (ft_strncmp(command, "##red", 5) == 0 && gnl(file))
-		return (RED);
-	if (ft_strncmp(command, "##yellow", 8) == 0 && gnl(file))
-		return (YELLOW);
-	if (ft_strncmp(command, "##cyan", 6) == 0 && gnl(file))
-		return (CYAN);
-	if (ft_strncmp(command, "##blue", 6) == 0 && gnl(file))
-		return (BLUE);
-	if (ft_strncmp(command, "##magneta", 9) == 0 && gnl(file))
-		return (GREEN);
-//	printf("lololol error you bitch\n");
-	error(3);
+	if (ft_strncmp(&(LINE[i]), "##end", 5) == 0 && gnl(file))
+	{
+		if (END != NULL)
+			error(10);
+		END = get_name(LINE);
+		return ("END");
+	}
+	else if (ft_strncmp(&(LINE[i]), "##start", 7) == 0 && gnl(file))
+	{
+		if (START != NULL)
+			error(10);
+		START = get_name(LINE);
+		return ("START");
+	}
 	return (NULL);
 }
-
 
 char	*comment_command(t_file *file)
 {
 	int		i;
 	char	*color;
-	
+
 	i = 0;
+	if (LINE[i] != '#')
+		return (NULL);
 	while (LINE[i] != '#' && LINE[i] != '\0')
 		i++;
 	if (LINE[i] == '\0')
@@ -81,30 +80,24 @@ char	*comment_command(t_file *file)
 		LINE[i] = '\0';
 	else
 	{
-		if (END == NULL && ft_strncmp(&(LINE[i]), "##end", 5) == 0 && gnl(file))
-			END = get_name(LINE);
-		else if (START == NULL && ft_strncmp(&(LINE[i]), "##start", 7) == 0
-				 && gnl(file))
-			START = get_name(LINE);
+		if (command(file, i) != NULL)
+			return (NULL);
 		else if ((color = colorsfind(file, &(LINE[i]))) != NULL)
 			return (color);
 	}
-	if (ft_strcmp(LINE, "\0") == 0)
-	{
-		gnl(file);
-		comment_command(file);
-	}
+	gnl(file);
+	comment_command(file);
 	return (NULL);
 }
 
-void    parse(t_file *file)
+void	parse(t_file *file)
 {
 	if (gnl(file) == 0)
 		error(4);
-	
+	comment_command(file);
 	get_ants(file);
 	rooms(file);
-	if (file->ants < 0)
+	if (file->ants < 0 || file->ants > 104000)
 		error(1);
 	if (START == NULL || END == NULL)
 		error(2);

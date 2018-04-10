@@ -12,11 +12,11 @@
 
 #include "../includes/lemin.h"
 
-char    *readandstore(void)
+char	*readandstore(void)
 {
-	char    *buff;
-	char    *final;
-	
+	char	*buff;
+	char	*final;
+
 	final = "\0";
 	buff = ft_strnew(BUFF_SIZE);
 	while (read(0, buff, BUFF_SIZE - 1) > 0)
@@ -29,26 +29,26 @@ char    *readandstore(void)
 	return (final);
 }
 
-int        gnl(t_file *file)
+int		gnl(t_file *file)
 {
 	int		size;
 	char	*temp;
-	
+
 	temp = ft_strnew(BUFF_SIZE);
 	LINE = ft_strnew(1);
-	while ((file->map[file->offset] == ' ' || file->map[file->offset] == '\n'
-			|| file->map[file->offset] == '\t') && file->map[file->offset] != '\0')
-		file->offset++;
 	while (file->map[file->offset] != '\n' && file->map[file->offset] != '\0')
 	{
 		size = 0;
 		while (size < BUFF_SIZE && file->map[file->offset] != '\n' &&
-			   file->map[file->offset] != '\0')
+			file->map[file->offset] != '\0')
 			temp[size++] = file->map[file->offset++];
 		LINE = ft_strjoin(LINE, temp);
 	}
+	if (file->map[file->offset] == '\n')
+		file->offset++;
+	if (ft_strcmp(LINE, "\0") == 0 && file->map[file->offset] != '\0')
+		error(12);
 	if (ft_strcmp(LINE, "\0") == 0)
 		return (0);
 	return (1);
 }
-

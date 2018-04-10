@@ -44,20 +44,6 @@ int		room_pos(t_file *file, char *to_find)
 	return (-1);
 }
 
-int		ftt_strcmp(char *s1, char *s2)
-{
-	int		i;
-
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if ((s1[i] < s2[i]) || (s1[i] > s2[i]))
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	return (0);
-}
-
 int		multi_path(t_file *file, t_room *ptr)
 {
 	int		curr;
@@ -69,7 +55,6 @@ int		multi_path(t_file *file, t_room *ptr)
 	name = ft_strjoin(name, " ");
 	name = ft_strjoin(name, ptr->name);
 	name = ft_strjoin(name, " ");
-	
 	while (curr < file->nb_paths)
 	{
 		if (ft_strcmp(file->paths[curr], "\0") != 0 &&
@@ -145,30 +130,16 @@ int        find_path(t_file *file, t_room *ptr, int w)
 	}
 	if (head)
 		head->open = true;
-    return (1);
+    return (file->nb_paths);
 }
 
 void	solve(t_file *file)
 {
 	t_room	*curr;
-
 	
-	printf("START %s | CURRENT %s\n", file->start, "curr->name");
 	if ((curr = find_room(file, file->start)) == NULL)
 		error(6);
-	printf("\n------------------------------------------------------------\n\n");
 	if (find_path(file, curr, 0) == 0)
 		error(5);
-	
-	
-	int i = 0;
-	
-	while (i < file->nb_paths)
-	{
-		printf("PATH[%d]: [%s]\n", i, file->paths[i]);
-		i++;
-	}
-	
 	print_path(file);
-	
 }

@@ -14,27 +14,21 @@
 
 #define IS_DIGIT(c)	(c > 47 && c < 58) ? 1 : 0
 
-int 	if_room(char *line, int i)
+int		if_room(char *line, int i)
 {
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
 	while (line[i] && line[i] != ' ' && line[i] != '\t')
 		i++;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
+	i++;
 	if (line[i] == '-')
 		i++;
 	while (IS_DIGIT(line[i]))
 		i++;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
+	i++;
 	if (line[i] == '\0')
 		return (0);
 	if (line[i] == '-')
 		i++;
 	while (IS_DIGIT(line[i]))
-		i++;
-	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	return (line[i] == '\0' ? 1 : 0);
 }
@@ -44,16 +38,18 @@ void	rooms(t_file *file)
 	t_room	*room;
 	char	*color;
 	int		i;
-	
+
 	i = 0;
 	while (gnl(file) != 0)
 	{
-//		printf("%sBEFORE[%s] room: %p%s\n", RED, LINE, &room, NORMAL);
-		color = comment_command(file);
 		room = (t_room *)malloc(sizeof(t_room));
-//		printf("%sAFTER[%s] room: %p%s\n", RED, LINE, &room, NORMAL);
+		color = comment_command(file);
 		if (if_room(LINE, 0) == 0)
-			break;
+		{
+			if (if_connect(file, 0))
+				break ;
+			error(7);
+		}
 		room->name = get_name(LINE);
 		room->weight = 0;
 		room->next = NULL;
@@ -63,5 +59,6 @@ void	rooms(t_file *file)
 		file->nb_rooms++;
 		(ROOMS)[i++] = room;
 	}
-	printf("ROOMS: %d\n", file->nb_rooms);
+	if (file->nb_rooms == 0)
+		error(11);
 }

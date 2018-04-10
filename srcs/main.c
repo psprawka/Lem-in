@@ -26,14 +26,13 @@ void	init(t_file *file)
 	file->offset = 0;
 }
 
-int     main(int ac, char **av)
+int		main(int ac, char **av)
 {
-    t_file file;
-	
+	t_file	file;
+
 	init(&file);
-    file.map = readandstore();
-    parse(&file);
-	printf("after parising:\nstart: [%s]\nend: [%s]\n", file.start, file.end);
+	file.map = readandstore();
+	parse(&file);
 	solve(&file);
 	free_file(&file);
 	return (0);

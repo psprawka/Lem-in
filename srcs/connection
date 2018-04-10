@@ -80,6 +80,27 @@ void	make_connect(t_file *file, char *r1, char *r2, int i)
 	}
 }
 
+void	rooms_exist(t_file *file, char *r1, char *r2)
+{
+	int i;
+	int	rooms;
+
+	i = 0;
+	rooms = 0;
+	while (i < file->nb_rooms)
+	{
+		if (ft_strcmp(ROOMS[i]->name, r1) == 0)
+			rooms++;
+		if (ft_strcmp(ROOMS[i]->name, r2) == 0)
+			rooms++;
+		i++;
+	}
+	if (rooms != 2)
+		error(8);
+	if (ft_strcmp(r1, r2) == 0)
+		error(9);
+}
+
 void	connect(t_file *file)
 {
 	char	*room1;
@@ -101,6 +122,7 @@ void	connect(t_file *file)
 		rooms_exist(file, room1, room2);
 		make_connect(file, room1, room2, -1);
 		if (gnl(file) == 0)
-			break ;
+			break;
 	}
 }
+

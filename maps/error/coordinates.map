@@ -1,0 +1,16 @@
+7
+##end
+pola -1 -3d
+sam 7 9
+adam 8 10
+liam 3 4
+terence 12 0
+##start
+nick 6 5
+pola-liam
+liam-nick
+nick-terence
+adam-pola
+adam-terence
+pola-sam
+terence-sam
