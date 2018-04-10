@@ -12,76 +12,41 @@
 
 #include "../includes/lemin.h"
 
-t_room	*find_room(t_file *file, char *to_find)
-{
-	t_room *ptr;
-	int i;
-	
-	i = 0;
-	while (i < file->nb_rooms)
-	{
-		ptr = ROOMS[i];
-		if (ft_strcmp(ptr->name, to_find) == 0)
-			return (ptr);
-		i++;
-	}
-	return ((t_room *)NULL);
-}
-
-int		room_pos(t_file *file, char *to_find)
-{
-	t_room *ptr;
-	int i;
-	
-	i = 0;
-	while (i < file->nb_rooms)
-	{
-		ptr = ROOMS[i];
-		if (ft_strcmp(ptr->name, to_find) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 int		multi_path(t_file *file, t_room *ptr)
 {
-	int		curr;
+	int		cur;
 	int		weight;
 	char	*name;
-	
-	curr = 0;
+
+	cur = 0;
 	name = ft_strnew(1);
 	name = ft_strjoin(name, " ");
 	name = ft_strjoin(name, ptr->name);
 	name = ft_strjoin(name, " ");
-	while (curr < file->nb_paths)
+	while (cur < file->nb_paths)
 	{
-		if (ft_strcmp(file->paths[curr], "\0") != 0 &&
-			ft_strstr(file->paths[curr], name) == 1)
+		if (ft_strcmp(ALL_PATHS[cur], "\0") && ft_strstr(ALL_PATHS[cur], name))
 		{
-			weight = ft_atoi(file->paths[curr]);
+			weight = ft_atoi(ALL_PATHS[cur]);
 			if (find_room(file, file->end)->weight >= weight)
 				return (-1);
 			else
 			{
-				free(file->paths[curr]);
-				file->paths[curr] = ft_strnew(1);
+				free(ALL_PATHS[cur]);
+				ALL_PATHS[cur] = ft_strnew(1);
 			}
 		}
-		curr++;
+		cur++;
 	}
 	return (0);
 }
 
-
-
 void	save_path(t_file *file)
 {
 	t_room	*ptr;
-    char	*path;
+	char	*path;
 	char	*weight;
-	
+
 	path = ft_strnew(1);
 	ptr = find_room(file, file->start);
 	weight = ft_itoa(find_room(file, file->end)->weight);
@@ -97,21 +62,21 @@ void	save_path(t_file *file)
 		ptr = find_room(file, (ROOMS[ptr->path])->name);
 	}
 	path = ft_strjoin(path, ptr->name);
-	file->paths[file->nb_paths++] = path;
+	ALL_PATHS[file->nb_paths++] = path;
 }
 
-int        find_path(t_file *file, t_room *ptr, int w)
+int		find_path(t_file *file, t_room *ptr, int w)
 {
-    t_room *head;
-	
-    head = ptr;
+	t_room *head;
+
+	head = ptr;
 	if (head)
 	{
 		head->open = false;
 		head->weight = w;
 	}
-    while (ptr)
-    {
+	while (ptr)
+	{
 		while (ptr && find_room(file, ptr->name)->open == false)
 			ptr = ptr->next;
 		if (ptr && ft_strcmp(ptr->name, file->end) == 0)
@@ -130,13 +95,13 @@ int        find_path(t_file *file, t_room *ptr, int w)
 	}
 	if (head)
 		head->open = true;
-    return (file->nb_paths);
+	return (file->nb_paths);
 }
 
 void	solve(t_file *file)
 {
 	t_room	*curr;
-	
+
 	if ((curr = find_room(file, file->start)) == NULL)
 		error(6);
 	if (find_path(file, curr, 0) == 0)

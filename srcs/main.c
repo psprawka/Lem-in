@@ -26,7 +26,7 @@ void	init(t_file *file)
 	file->offset = 0;
 }
 
-int		main(int ac, char **av)
+int		main(void)
 {
 	t_file	file;
 

@@ -12,67 +12,43 @@
 
 #include "../includes/lemin.h"
 
-void	error(int errno)
+t_room	*find_room(t_file *file, char *to_find)
 {
-	if (errno == 1)
-		printf("ERROR: INVALID NUMBER/FORMAT/LACK OF ANTS\n");
-	else if (errno == 2)
-		printf("ERROR: NO START OR NO END\n");
-	else if (errno == 3)
-		printf("ERROR: WRONG COMMAND FORMAT OR PLACEMENT\n");
-	else if (errno == 4)
-		printf("ERROR: EMPTY FILE\n");
-	else if (errno == 5)
-		printf("ERROR: NO PATHS\n");
-	else if (errno == 6)
-		printf("ERROR: IDK WHAT IT CHECKS LOL\n");
-	else if (errno == 7)
-		printf("ERROR: WRONG FILE FORMAT\n");
-	else if (errno == 8)
-		printf("ERROR: UNKNOWN ROOM OR ROOM REPEATED\n");
-	else if (errno == 9)
-		printf("ERROR: ROOM LINKS TO ITSELF\n");
-	else if (errno == 10)
-		printf("ERROR: MULTIPLE STARTS OR ENDS\n");
-	else if (errno == 11)
-		printf("ERROR: NO ROOMS\n");
-	else if (errno == 12)
-		printf("ERROR: EMPTY LINE\n");
-	exit (0);
+	t_room	*ptr;
+	int		i;
+
+	i = 0;
+	while (i < file->nb_rooms)
+	{
+		ptr = ROOMS[i];
+		if (ft_strcmp(ptr->name, to_find) == 0)
+			return (ptr);
+		i++;
+	}
+	return ((t_room *)NULL);
 }
 
-char	*colorsfind(t_file *file, char *command)
+int		room_pos(t_file *file, char *to_find)
 {
-	if (ft_strncmp(command, "##green", 7) == 0 && gnl(file))
-		return (GREEN);
-	if (ft_strncmp(command, "##red", 5) == 0 && gnl(file))
-		return (RED);
-	if (ft_strncmp(command, "##yellow", 8) == 0 && gnl(file))
-		return (YELLOW);
-	if (ft_strncmp(command, "##cyan", 6) == 0 && gnl(file))
-		return (CYAN);
-	if (ft_strncmp(command, "##blue", 6) == 0 && gnl(file))
-		return (BLUE);
-	if (ft_strncmp(command, "##magneta", 9) == 0 && gnl(file))
-		return (MAGNETA);
-	if (ft_strncmp(command, "##pink", 6) == 0 && gnl(file))
-		return (PINK);
-	if (ft_strncmp(command, "##orange", 8) == 0 && gnl(file))
-		return (ORANGE);
-	if (ft_strncmp(command, "##grey", 6) == 0 && gnl(file))
-		return (GREY);
-	if (ft_strncmp(command, "##maroon", 8) == 0 && gnl(file))
-		return (MAROON);
-	if (ft_strncmp(command, "##purple", 8) == 0 && gnl(file))
-		return (PURPLE);
-	return (NULL);
+	t_room	*ptr;
+	int		i;
+
+	i = 0;
+	while (i < file->nb_rooms)
+	{
+		ptr = ROOMS[i];
+		if (ft_strcmp(ptr->name, to_find) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 void	rooms_exist(t_file *file, char *r1, char *r2)
 {
-	int i;
+	int	i;
 	int	rooms;
-	
+
 	i = 0;
 	rooms = 0;
 	while (i < file->nb_rooms)
@@ -89,3 +65,28 @@ void	rooms_exist(t_file *file, char *r1, char *r2)
 		error(9);
 }
 
+void	add_room_path(t_file *file, t_path *head, char *name)
+{
+	t_path	*path;
+	t_room	*room;
+	
+	path = (t_path *)malloc(sizeof(t_path));
+	path->weight = 0;
+	room = find_room(file, name);
+	path->color = room->color;
+	path->name = ft_strdup(name);
+	path->next = NULL;
+	if (head == NULL)
+	{
+		PATHS[file->nb_fpaths] = path;
+		path->prev = NULL;
+	}
+	else
+	{
+		while (head->next)
+			head = head->next;
+		head->next = path;
+		path->prev = head;
+	}
+	free(name);
+}

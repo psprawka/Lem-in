@@ -96,8 +96,8 @@ void	parse(t_file *file)
 		error(4);
 	comment_command(file);
 	get_ants(file);
-	rooms(file);
-	if (file->ants < 0 || file->ants > 104000)
+	rooms(file, 0);
+	if (file->ants < 0 || file->ants > 65000)
 		error(1);
 	if (START == NULL || END == NULL)
 		error(2);

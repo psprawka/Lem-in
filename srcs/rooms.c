@@ -33,13 +33,11 @@ int		if_room(char *line, int i)
 	return (line[i] == '\0' ? 1 : 0);
 }
 
-void	rooms(t_file *file)
+void	rooms(t_file *file, int i)
 {
 	t_room	*room;
 	char	*color;
-	int		i;
 
-	i = 0;
 	while (gnl(file) != 0)
 	{
 		room = (t_room *)malloc(sizeof(t_room));
