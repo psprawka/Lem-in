@@ -11,6 +11,9 @@
 # **************************************************************************** #
 
 NAME = lem-in
+FLAGS = -g -Wall -Wextra -Werror
+
+HEADERS = includes/
 SRCS_DIR = srcs/
 
 SRCS =	$(SRCS_DIR)connection.c	\
@@ -24,43 +27,35 @@ SRCS =	$(SRCS_DIR)connection.c	\
 			$(SRCS_DIR)utilities.c \
 			$(SRCS_DIR)rooms.c \
 
-
-CFLAGS = -g -Wall -Wextra -Werror
-INCLUDES = includes/
-HEADERS = $(INCLUDES)*
 OBJS = $(SRCS:.c=.o)
+LIBFT = libft/libft.a
 
-LIBFT = libftprintf.a \
-			libft.a
+BUILD_PRINT = @echo "\r\033[K\033[0;38;5;27m[LEM-IN] \033[38;5;45mBuilding $<"
+DONE = @echo "\033[K\033[1;38;5;200mLEM-IN ready to use!"
+CLEAN_O = @echo "\033[38;5;246mObject files removed! [LEM-IN]"
+CLEAN_A = @echo "\033[38;5;246mExecutable removed! [LEM-IN]"
 
 all: $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS) $(HEADERS)
-	@printf "\r\033[K\033[1;33m[COREWAR] \033[0;32mLinking...\033[0m\n"
-	@gcc $(CFLAGS) -I$(INCLUDES) $(OBJS) $(LIBFT) -lncurses -o $(NAME)
-	@printf "\r\033[K\033[1;33m[COREWAR] \033[0;32mDone!\033[0m\n"
+	@gcc $(FLAGS) -I $(HEADERS) $(OBJS) $(LIBFT) -lncurses -o $(NAME)
+	$(DONE)
 
 $(LIBFT):
-	@make -C libs/libft
-	@make -C libs/ft_printf
-	@cp libs/libft/libft.a .
-	@cp libs/ft_printf/libftprintf.a .
+	@make -C libft
 
 %.o: %.c
-	@printf "\r\033[K\033[1;33m[COREWAR] \033[0;32mBuilding $<\033[0m\n"
-	@gcc $(CFLAGS) -I $(INCLUDES) -c $< -o $@
-	@printf "done!\n"
+	$(BUILD_PRINT)
+	@gcc $(CFLAGS) -I $(HEADERS) -c $< -o $@
 
 clean:
-	@$(MAKE) -C libs/ clean
+	@$(MAKE) -C libft/ clean
 	@rm -f $(OBJS)
-	@printf "\033[1;32m[COREWAR] \033[1;31mCleaned .o!\033[0m\n"
+	$(CLEAN_O)
 
 fclean: clean
-	@$(MAKE) -C libs/ fclean
+	@$(MAKE) -C libft/ fclean
 	@rm -f $(NAME)
-	@rm -f libftprintf.a
-	@rm -f libft.a
-	@printf "\033[1;32m[COREWAR] \033[1;31mCleaned all!\033[0m\n"
+	$(CLEAN_A)
 
 re: fclean all

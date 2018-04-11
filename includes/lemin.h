@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include "libft.h"
 
 # define BUFF_SIZE 		100
 # define MAX_NAME_LEN 	1000
