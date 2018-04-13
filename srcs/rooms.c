@@ -38,14 +38,16 @@ void	rooms(t_file *file, int i)
 	t_room	*room;
 	char	*color;
 
-	while (gnl(file) != 0)
+	while (gnl(file) != 0 && (room = (t_room *)malloc(sizeof(t_room))))
 	{
-		room = (t_room *)malloc(sizeof(t_room));
 		color = comment_command(file);
 		if (if_room(LINE, 0) == 0)
 		{
 			if (if_connect(file, 0))
+			{
+				free(room);
 				break ;
+			}
 			error(7);
 		}
 		room->name = get_name(LINE);
@@ -54,9 +56,8 @@ void	rooms(t_file *file, int i)
 		room->color = color == NULL ? NORMAL : color;
 		room->open = 1;
 		room->path = -1;
-		file->nb_rooms++;
-		(ROOMS)[i++] = room;
+		(ROOMS)[file->nb_rooms++] = room;
 	}
-	if (file->nb_rooms == 0)
-		error(11);
+	file->nb_rooms == 0 ? error(11) : write(1, "", 0);
+	ROOMS[file->nb_rooms] = NULL;
 }

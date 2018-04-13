@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-long int    ft_atoi(char *s)
+long int	ft_atoi(char *s)
 {
 	long int	nb;
 	int			i;
@@ -28,4 +28,3 @@ long int    ft_atoi(char *s)
 	nb = s[0] == '-' ? nb * -1 : nb;
 	return (nb);
 }
-

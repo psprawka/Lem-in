@@ -53,7 +53,6 @@ void	ftt_putnbr(long int nb, t_flags *bag)
 	return ;
 }
 
-
 int		if_unicode(t_flags *bag, wchar_t *ws)
 {
 	if (ARGUMENT != 7)

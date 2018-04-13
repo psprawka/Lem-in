@@ -16,7 +16,7 @@
 ** print_width prints both precision and width for either characher or string
 */
 
-void	parse(t_flags *bag)
+void	printf_parse(t_flags *bag)
 {
 	ZERO = PRECISION < 0 ? false : ZERO;
 	LEN = (PRECISION < LEN && IF_PREC == true) ? PRECISION : LEN;
@@ -46,7 +46,7 @@ void	print_string(t_flags *bag, va_list ap)
 	if (colors(str, bag) == 1)
 		return ;
 	LEN = ft_strlen(str);
-	parse(bag);
+	printf_parse(bag);
 	while (MINUS == false && WIDTH-- > 0)
 		ZERO == true ? ftt_putchar('0', bag) : ftt_putchar(' ', bag);
 	while (LEN-- > 0 && *str != '\0')
@@ -72,7 +72,7 @@ void	print_wchar_str(t_flags *bag, va_list ap)
 	while (ws != NULL && *ws != '\0' && ARGUMENT == 7)
 		s = ft_strjoin(s, ft_convert_uni(*ws++));
 	LEN = s == NULL ? 0 : ft_strlen(s);
-	parse(bag);
+	printf_parse(bag);
 	while (MINUS == false && WIDTH-- > 0)
 		ZERO == true ? ftt_putchar('0', bag) : ftt_putchar(' ', bag);
 	while (LEN-- > 0 && *s != '\0')
@@ -91,7 +91,7 @@ void	print_char(t_flags *bag, va_list ap)
 
 	x = (unsigned char)va_arg(ap, int);
 	LEN = 1;
-	parse(bag);
+	printf_parse(bag);
 	while (MINUS == false && WIDTH-- > 0)
 		ZERO == true ? ftt_putchar('0', bag) : ftt_putchar(' ', bag);
 	ftt_putchar(x, bag);
@@ -107,7 +107,7 @@ void	print_wchar(t_flags *bag, va_list ap)
 	wx = va_arg(ap, wint_t);
 	x = ft_convert_uni((wchar_t)(wx));
 	LEN = 1;
-	parse(bag);
+	printf_parse(bag);
 	while (MINUS == false && WIDTH-- > 0)
 		ZERO == true ? ftt_putchar('0', bag) : ftt_putchar(' ', bag);
 	ftt_putstr(x, bag);

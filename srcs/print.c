@@ -41,6 +41,7 @@ void	get_paths(t_file *file, int path, int i)
 			PATHS[file->nb_fpaths++]->weight = ft_atoi(ALL_PATHS[path]);
 		}
 	}
+	PATHS[file->nb_fpaths] = NULL;
 }
 
 #define MIN_W	PATHS[min]->weight
@@ -118,7 +119,7 @@ void	display_ants(t_file *file, int cycle, int paths)
 			while (++i < cycle && ptr)
 			{
 				if (ft_strcmp(ptr->name, START) && ANT != -1)
-					printf("%sL%d-%s %s", COLOR, ANT, ptr->name, NORMAL);
+					ft_printf("%sL%d-%s %s", COLOR, ANT, ptr->name, NORMAL);
 				if (ft_strcmp(file->end, ptr->name) == 0 && ANT != -1)
 					ANTS--;
 				ptr = ptr->prev;
@@ -126,7 +127,7 @@ void	display_ants(t_file *file, int cycle, int paths)
 			PATHS[paths]->ants--;
 		}
 	}
-	printf("\n");
+	ft_printf("\n");
 	move_ants(file, cycle, 0, 0);
 }
 

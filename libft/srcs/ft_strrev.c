@@ -17,7 +17,7 @@ char	*ft_strrev(char *str)
 	char	*rev;
 	int		i;
 	int		x;
-	
+
 	x = 0;
 	i = ft_strlen(str);
 	rev = (char *)malloc(sizeof(char) * (i + 1));

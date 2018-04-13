@@ -16,7 +16,7 @@ void	create_string(double nb, char *rest, int i)
 {
 	int		afterdots;
 	int		dot;
-	
+
 	dot = 0;
 	afterdots = 0;
 	if (nb < 1)
@@ -43,7 +43,7 @@ char	*ft_ftoa(double n)
 	char		*first;
 	long int	nb;
 	int			i;
-	
+
 	i = -1;
 	nb = (long int)n;
 	first = ft_itoa(nb);

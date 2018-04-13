@@ -12,32 +12,31 @@
 
 #include "lemin.h"
 
-int		multi_path(t_file *file, t_room *ptr)
+int		multi_path(t_file *file, t_room *ptr, int cur)
 {
-	int		cur;
 	int		weight;
 	char	*name;
 
-	cur = 0;
 	name = ft_strnew(1);
 	name = ft_strjoin(name, " ");
 	name = ft_strjoin(name, ptr->name);
 	name = ft_strjoin(name, " ");
-	while (cur < file->nb_paths)
-	{
+	while (++cur < file->nb_paths)
 		if (ft_strcmp(ALL_PATHS[cur], "\0") && ft_strstr(ALL_PATHS[cur], name))
 		{
 			weight = ft_atoi(ALL_PATHS[cur]);
 			if (find_room(file, file->end)->weight >= weight)
+			{
+				free(name);
 				return (-1);
+			}
 			else
 			{
 				free(ALL_PATHS[cur]);
 				ALL_PATHS[cur] = ft_strnew(1);
 			}
 		}
-		cur++;
-	}
+	free(name);
 	return (0);
 }
 
@@ -55,8 +54,11 @@ void	save_path(t_file *file)
 	path = ft_strjoin(path, ":");
 	while (ptr && ft_strcmp(ptr->name, file->end) != 0)
 	{
-		if (multi_path(file, ptr) == -1)
+		if (multi_path(file, ptr, -1) == -1)
+		{
+			free(path);
 			return ;
+		}
 		path = ft_strjoin(path, ptr->name);
 		path = ft_strjoin(path, " ");
 		ptr = find_room(file, (ROOMS[ptr->path])->name);
@@ -65,16 +67,8 @@ void	save_path(t_file *file)
 	ALL_PATHS[file->nb_paths++] = path;
 }
 
-int		find_path(t_file *file, t_room *ptr, int w)
+void	find_path2(t_file *file, t_room *ptr, t_room *head, int w)
 {
-	t_room *head;
-
-	head = ptr;
-	if (head)
-	{
-		head->open = false;
-		head->weight = w;
-	}
 	while (ptr)
 	{
 		while (ptr && find_room(file, ptr->name)->open == false)
@@ -93,6 +87,19 @@ int		find_path(t_file *file, t_room *ptr, int w)
 			ptr = ptr->next;
 		}
 	}
+}
+
+int		find_path(t_file *file, t_room *ptr, int w)
+{
+	t_room *head;
+
+	head = ptr;
+	if (head)
+	{
+		head->open = false;
+		head->weight = w;
+	}
+	find_path2(file, ptr, head, w);
 	if (head)
 		head->open = true;
 	return (file->nb_paths);

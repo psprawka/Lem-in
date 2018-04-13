@@ -16,7 +16,7 @@ char	*ft_convert_octal(unsigned long int nb)
 {
 	char	*print;
 	int		i;
-	
+
 	i = 0;
 	print = ft_memalloc(22);
 	if (nb == 0)
@@ -29,4 +29,3 @@ char	*ft_convert_octal(unsigned long int nb)
 	print[i] = '\0';
 	return (ft_strrev(print));
 }
-

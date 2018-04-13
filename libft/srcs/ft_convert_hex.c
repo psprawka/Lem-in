@@ -14,9 +14,9 @@
 
 char	*ft_convert_hex(unsigned long int nb, int type)
 {
-	char		*print;
-	int			i;
-	
+	char	*print;
+	int		i;
+
 	i = 0;
 	print = ft_memalloc(21);
 	if (nb == 0)

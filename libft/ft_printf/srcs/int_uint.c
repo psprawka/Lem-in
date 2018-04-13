@@ -120,7 +120,8 @@ void			print_unsigned_int(t_flags *bag, va_list ap)
 	char					*print;
 
 	nb = assign_value(bag, ap);
-	print = (nb > LL_MAX && (TYPE == 'u' || TYPE == 'U')) ? ft_ulltoa(nb) : convert(bag, nb);
+	print = (nb > LL_MAX && (TYPE == 'u' || TYPE == 'U')) ?
+		ft_ulltoa(nb) : convert(bag, nb);
 	LEN = nb == 0 ? 0 : ft_strlen(print);
 	parse_unsigned_int(bag);
 	if (ZERO == true)

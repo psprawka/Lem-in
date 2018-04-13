@@ -15,29 +15,29 @@
 void	error(int errno)
 {
 	if (errno == 1)
-		printf("ERROR: INVALID NUMBER/FORMAT/LACK OF ANTS\n");
+		ft_printf("ERROR: INVALID NUMBER/FORMAT OF ANTS\n");
 	else if (errno == 2)
-		printf("ERROR: NO START OR NO END\n");
+		ft_printf("ERROR: NO START OR NO END\n");
 	else if (errno == 3)
-		printf("ERROR: WRONG COMMAND FORMAT OR PLACEMENT\n");
+		ft_printf("ERROR: WRONG COMMAND FORMAT OR PLACEMENT\n");
 	else if (errno == 4)
-		printf("ERROR: EMPTY FILE\n");
+		ft_printf("ERROR: EMPTY FILE\n");
 	else if (errno == 5)
-		printf("ERROR: NO PATHS\n");
+		ft_printf("ERROR: NO PATHS\n");
 	else if (errno == 6)
-		printf("ERROR: IDK WHAT IT CHECKS LOL\n");
+		ft_printf("ERROR: IDK WHAT IT CHECKS LOL\n");
 	else if (errno == 7)
-		printf("ERROR: WRONG FILE FORMAT\n");
+		ft_printf("ERROR: WRONG FILE FORMAT\n");
 	else if (errno == 8)
-		printf("ERROR: UNKNOWN ROOM OR ROOM REPEATED\n");
+		ft_printf("ERROR: UNKNOWN ROOM OR ROOM REPEATED\n");
 	else if (errno == 9)
-		printf("ERROR: ROOM LINKS TO ITSELF\n");
+		ft_printf("ERROR: ROOM LINKS TO ITSELF\n");
 	else if (errno == 10)
-		printf("ERROR: MULTIPLE STARTS OR ENDS\n");
+		ft_printf("ERROR: MULTIPLE STARTS OR ENDS\n");
 	else if (errno == 11)
-		printf("ERROR: NO ROOMS\n");
+		ft_printf("ERROR: NO ROOMS\n");
 	else if (errno == 12)
-		printf("ERROR: EMPTY LINE\n");
+		ft_printf("ERROR: EMPTY LINE\n");
 	exit(0);
 }
 

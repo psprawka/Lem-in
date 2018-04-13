@@ -15,7 +15,7 @@
 char	*ft_convert_uni(wchar_t wide)
 {
 	char *new;
-	
+
 	new = ft_strnew(5);
 	if (wide < 0x80)
 		new[0] = ((wide >> 0) & 0x7F) | 0x00;

@@ -16,6 +16,7 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*f;
 	int		i;
+	int		j;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -24,8 +25,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = -1;
 	while (s1[++i])
 		f[i] = s1[i];
-	while (*s2)
-		f[i++] = *s2++;
+	free(s1);
+	j = 0;
+	while (s2[j])
+		f[i++] = s2[j++];
 	f[i] = '\0';
 	return (f);
 }

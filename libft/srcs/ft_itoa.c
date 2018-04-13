@@ -39,4 +39,3 @@ char	*ft_itoa(int nbr)
 	str[ft_strlen(str)] = '\0';
 	return (str);
 }
-

@@ -47,14 +47,14 @@ void	get_ants(t_file *file)
 
 char	*command(t_file *file, int i)
 {
-	if (ft_strncmp(&(LINE[i]), "##end", 5) == 0 && gnl(file))
+	if (ft_strncmp(&(LINE[i]), "##end\0", 6) == 0 && gnl(file))
 	{
 		if (END != NULL)
 			error(10);
 		END = get_name(LINE);
 		return ("END");
 	}
-	else if (ft_strncmp(&(LINE[i]), "##start", 7) == 0 && gnl(file))
+	else if (ft_strncmp(&(LINE[i]), "##start\0", 8) == 0 && gnl(file))
 	{
 		if (START != NULL)
 			error(10);

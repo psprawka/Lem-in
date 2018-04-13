@@ -69,12 +69,13 @@ void	add_room_path(t_file *file, t_path *head, char *name)
 {
 	t_path	*path;
 	t_room	*room;
-	
+
 	path = (t_path *)malloc(sizeof(t_path));
 	path->weight = 0;
 	room = find_room(file, name);
 	path->color = room->color;
 	path->name = ft_strdup(name);
+	path->ants = 0;
 	path->next = NULL;
 	if (head == NULL)
 	{

@@ -12,12 +12,15 @@
 
 #include "lemin.h"
 
+#define MAP		file->map
+#define OFFSET	file->offset
+
 char	*readandstore(void)
 {
 	char	*buff;
 	char	*final;
 
-	final = "\0";
+	final = ft_strnew(1);
 	buff = ft_strnew(BUFF_SIZE);
 	while (read(0, buff, BUFF_SIZE - 1) > 0)
 	{
@@ -25,7 +28,7 @@ char	*readandstore(void)
 		ft_bzero(buff, BUFF_SIZE);
 	}
 	free(buff);
-	printf("%s%s%s", GREEN, final, NORMAL);
+	ft_printf("%s%s%s", ORANGE, final, NORMAL);
 	return (final);
 }
 
@@ -35,20 +38,25 @@ int		gnl(t_file *file)
 	char	*temp;
 
 	temp = ft_strnew(BUFF_SIZE);
+	if (LINE)
+		free(LINE);
 	LINE = ft_strnew(1);
-	while (file->map[file->offset] != '\n' && file->map[file->offset] != '\0')
+	while (MAP[OFFSET] != '\n' && MAP[OFFSET] != '\0')
 	{
 		size = 0;
-		while (size < BUFF_SIZE && file->map[file->offset] != '\n' &&
-			file->map[file->offset] != '\0')
-			temp[size++] = file->map[file->offset++];
+		while (size < BUFF_SIZE && MAP[OFFSET] != '\n' && MAP[OFFSET] != '\0')
+			temp[size++] = MAP[OFFSET++];
 		LINE = ft_strjoin(LINE, temp);
+		free(temp);
 	}
-	if (file->map[file->offset] == '\n')
-		file->offset++;
-	if (ft_strcmp(LINE, "\0") == 0 && file->map[file->offset] != '\0')
+	if (MAP[OFFSET] == '\n')
+		OFFSET++;
+	if (ft_strcmp(LINE, "\0") == 0 && MAP[OFFSET] != '\0')
 		error(12);
 	if (ft_strcmp(LINE, "\0") == 0)
+	{
+		free(temp);
 		return (0);
+	}
 	return (1);
 }
