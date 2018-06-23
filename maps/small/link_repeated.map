@@ -6,13 +6,13 @@ sam 7 9
 ##yellow
 adam 8 10
 ##cyan
-liam 3 4
+bob 3 4
 ##end
 terence 12 0
 ##magneta
 nick 6 5
-pola-liam
-liam-nick
+pola-bob
+bob-nick
 nick-terence
 adam-pola
 pola-adam
