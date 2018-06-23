@@ -49,7 +49,7 @@ where:
   the_rooms
   the_links
   ```
-  Remember to include mandatory commands ```##start``` and ```##end```. If you wish to color a room, add ```##<color_name>``` before a requested room (*color_name* has to be lowercase). You can find list of all colors in ```includes/libft.h``` file.
+  Remember to include mandatory commands ```##start``` and ```##end```. If you wish to color a room, add ```##<color_name>``` before a requested room (*color_name* has to be lowercase). You can find list of all colors in ```includes/libft.h``` file. 🌈🌈🌈
  </br></br>
   
  
