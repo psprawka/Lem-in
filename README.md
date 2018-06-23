@@ -10,7 +10,7 @@ cd lem-in-psprawka
 make
 ./lem-in < <map_example>
 ```
-The exemplary maps are avaliable in ```maps/``` directory. Personally, I'll recommend ```maps/big/42_france.map```
+The exemplary maps are avaliable in  ```maps/```  directory. Personally, I'll recommend  ```maps/big/42_france.map```.
 </br>
 The output will be displayed in following format:
 ```
@@ -49,9 +49,9 @@ where:
   the_rooms
   the_links
   ```
-  Remember to include mandatory commands ```##start``` and ```##end```. If you wish to color a room, add ```##<color_name>``` before a requested room (*color_name* has to be lowercase).
+  Remember to include mandatory commands  ```##start```  and  ```##end```. If you wish to color a room, add  ```##<color_name>```  before a requested room (*color_name* has to be lowercase).
   </br>
-  You can find list of all colors in ```includes/libft.h``` file. 🌈🌈🌈
+  You can find list of all colors in  ```includes/libft.h```  file. 🌈🌈🌈
   </br></br>
   
  
