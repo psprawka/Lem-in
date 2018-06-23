@@ -3,12 +3,6 @@
 Implemented algorithm analyzes a unique input with a variable number of ants and helps the colony navigate from the start of a maze to the. The solver is multi-pathed, recursive, and weighted for distance. It doesn't forget about avoiding traffic jams  as well as walking all over their fellow ants. A graphical output to watch the ants find their home included! ✅ 
 </br></br>
 
-<p float="left">
-  <img src="imgs/path4.png" width="32%"/> 
-  <img src="imgs/path0.png" width="34.95%"/> 
-  <img src="imgs/path5.png" width="32.05%"/>
-</p>
-
 ## How to run lem-in?
 ```
 git clone https://github.com/psprawka/Lem-in.git lem-in-psprawka
@@ -29,6 +23,13 @@ where:
 * ```x```, ```z```, ```r``` represent the ants’ numbers (going from 1 to number_of_ants),
 * ```y```, ```w```, ```o``` represent the rooms’ names.
 </br></br>
+
+<p float="left">
+  <img src="imgs/path4.png" width="32%"/> 
+  <img src="imgs/path0.png" width="34.95%"/> 
+  <img src="imgs/path5.png" width="32.05%"/>
+</p>
+
 
 ## A farm rules
 ### There are some rules each given farm has to respect:
