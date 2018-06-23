@@ -4,9 +4,9 @@ Implemented algorithm analyzes a unique input with a variable number of ants and
 </br></br>
 
 <p float="left">
-  <img src="imgs/path0.png" width="34%"/> 
-  <img src="imgs/path1.png" width="31%"/> 
-  <img src="imgs/path2.png" width="34%"/>
+  <img src="imgs/path0.png" width="35%"/> 
+  <img src="imgs/path1.png" width="30.5%"/> 
+  <img src="imgs/path2.png" width="33.5%"/>
 </p>
 
 ## How to run lem-in?
